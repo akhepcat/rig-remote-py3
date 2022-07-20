@@ -22,9 +22,9 @@ TAS - Tim Sweeney - mainetim@gmail.com
 import re
 from socket import gethostbyname, gaierror
 import logging
-import Tkinter as tk
+import tkinter as tk
 import os.path
-import ttk
+import tkinter.ttk
 
 logger = logging.getLogger(__name__)
 
@@ -65,7 +65,7 @@ def frequency_pp_parse(frequency):
     :return type: string or None
     """
 
-    if not isinstance(frequency, basestring):
+    if not isinstance(frequency, str):
         logger.error("frequency is not a string, "\
                      "but {}".format(type(frequency)))
         raise ValueError
@@ -459,7 +459,7 @@ class ToolTip:
         label = tk.Label(self._tipwindow, **opts)
         label.pack()
 
-class RCCheckbutton(ttk.Checkbutton) :
+class RCCheckbutton(tkinter.ttk.Checkbutton) :
     """
     RCCheckbutton is derived from ttk.Checkbutton, and adds an
     "is_checked" method to simplify checking instance's state, and
@@ -469,7 +469,7 @@ class RCCheckbutton(ttk.Checkbutton) :
     def __init__(self, *args, **kwargs):
         self.var = kwargs.get('variable', tk.BooleanVar())
         kwargs['variable'] = self.var
-        ttk.Checkbutton.__init__(self, *args, **kwargs)
+        tkinter.ttk.Checkbutton.__init__(self, *args, **kwargs)
 
     def is_checked(self):
         return self.var.get()

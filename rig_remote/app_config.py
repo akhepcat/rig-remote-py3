@@ -38,7 +38,7 @@ from rig_remote.constants import (
 import logging
 import os
 import sys
-import ConfigParser
+import configparser
 from rig_remote.exceptions import (
                                    NonRetriableError,
                                   )
@@ -88,14 +88,14 @@ class AppConfig(object):
         if os.path.isfile(self.config_file):
             logger.info("Using config file:{}".format(self.config_file))
 
-            config = ConfigParser.RawConfigParser()
+            config = configparser.RawConfigParser()
             try:
                 config.read(self.config_file)
-            except ConfigParser.MissingSectionHeaderError:
+            except configparser.MissingSectionHeaderError:
                     logger.error("Missing Sections in the config file.")
                     logger.error(UPGRADE_MESSAGE)
                     sys.exit(1)
-            except ConfigParser.Error:
+            except configparser.Error:
                     logger.exception("Error while loading"
                                      "{}".format(self.config_file))
 
@@ -127,11 +127,11 @@ class AppConfig(object):
                         "path as {}".format(self.config_file))
         except OSError:
             logger.info("The config directory already exists.")
-        config = ConfigParser.RawConfigParser()
+        config = configparser.RawConfigParser()
         for section in CONFIG_SECTIONS:
             config.add_section(section)
 
-        for key in self.config.keys():
+        for key in list(self.config.keys()):
             if key in RIG_URI_CONFIG:
                 config.set("Rig URI", key, self.config[key])
             if key in MONITOR_CONFIG:

@@ -20,10 +20,10 @@ from rig_remote.utility import (
                                 frequency_pp,
                                )
 import logging
-import Tkinter as tk
-import Tkconstants
-import tkMessageBox
-import tkFileDialog
+import tkinter as tk
+import tkinter.constants
+import tkinter.messagebox
+import tkinter.filedialog
 import os
 
 # logging configuration
@@ -122,7 +122,7 @@ class Bookmarks(object):
                 error = True
             if error == True :
                 if not silent:
-                    tkMessageBox.showerror("Error", "Invalid value in "\
+                    tkinter.messagebox.showerror("Error", "Invalid value in "\
                                            "Bookmark #%i. "\
                                            "Skipping..." %count)
             else:
@@ -163,7 +163,7 @@ class Bookmarks(object):
         """
 
 
-        filename = tkFileDialog.askopenfilename(initialdir = "~/",
+        filename = tkinter.filedialog.askopenfilename(initialdir = "~/",
                                                 title = "Select bookmark file",
                                                 filetypes = (("csv files","*.csv"),
                                                              ("all files","*.*")))
@@ -182,7 +182,7 @@ class Bookmarks(object):
         if not silent:
             logger.error("Unsupported format, supported formats are rig-remote"
                          "rig-remote and gqrx,")
-            tkMessageBox.showerror("Error", "Unsupported file format.")
+            tkinter.messagebox.showerror("Error", "Unsupported file format.")
 
     def _detect_format(self, filename):
         """Method for detecting the bookmark type. Only two types are supported.
@@ -297,7 +297,7 @@ class Bookmarks(object):
         """handles the popup for selecting the path for saving the file.
         """
 
-        filename = tkFileDialog.asksaveasfilename(initialdir = "~/",
+        filename = tkinter.filedialog.asksaveasfilename(initialdir = "~/",
                                                   title = "Select bookmark file",
                                                   initialfile = "bookmarks-export.csv",
                                                   filetypes = (("csv","*.csv"),

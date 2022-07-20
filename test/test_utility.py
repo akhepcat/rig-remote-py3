@@ -14,7 +14,7 @@ from rig_remote.utility import (
                                 shutdown,
                                 )
 from rig_remote.ui import RigRemote
-import Tkinter as tk
+import tkinter as tk
 from mock import MagicMock
 from rig_remote.app_config import AppConfig
 

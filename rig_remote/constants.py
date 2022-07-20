@@ -317,7 +317,7 @@ LEN_BM = 4
 class BM(object):
     "Helper class with 4 attribs."
 
-    freq, mode, desc, lockout = range(LEN_BM)
+    freq, mode, desc, lockout = list(range(LEN_BM))
 
 UI_EVENT_TIMER_DELAY = 1000
 QUEUE_MAX_SIZE = 10

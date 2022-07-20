@@ -6,7 +6,7 @@ import os
 from rig_remote.bookmarks import Bookmarks
 from rig_remote.disk_io import IO
 from mock import MagicMock, Mock
-import tkFileDialog
+import tkinter.filedialog
 from rig_remote.exceptions import (
                                    InvalidPathError,
                                    FormatError,
@@ -16,10 +16,10 @@ from rig_remote.constants import (
                                   CBB_MODES,
                                  )
 
-import ttk
+import tkinter.ttk
 @pytest.fixture
 def bk():
-    tree = ttk.Treeview(columns=("frequency",
+    tree = tkinter.ttk.Treeview(columns=("frequency",
                                  "mode",
                                  "description",
                                  "lockout"),
@@ -27,7 +27,7 @@ def bk():
                                         "mode",
                                         "description"),
                         show="headings")
-    value =  [u'5,955,000', u'AM', u'found on 18.34 jan 08 2015', u'O']
+    value =  ['5,955,000', 'AM', 'found on 18.34 jan 08 2015', 'O']
     bk_list = []
     bk_list.append(value)
     bk = Bookmarks(tree, io=IO())
@@ -37,8 +37,8 @@ def bk():
 
 def test_export_panel():
     bk = Bookmarks("test", io=IO())
-    tkFileDialog.asksaveasfilename = MagicMock()
-    tkFileDialog.asksaveasfilename.return_Value = "testfile"
+    tkinter.filedialog.asksaveasfilename = MagicMock()
+    tkinter.filedialog.asksaveasfilename.return_Value = "testfile"
     bk._export_panel() == "testfile"
 
 def test_detect_format():
@@ -55,7 +55,7 @@ def test_export_rig_remote_bad_attrib():
 
 
 def test_save_gqrx():
-    tree = ttk.Treeview(columns=("frequency",
+    tree = tkinter.ttk.Treeview(columns=("frequency",
                                  "mode",
                                  "description",
                                  "lockout"),
@@ -72,7 +72,7 @@ def test_save_gqrx():
 
 
 def test_save_gqrx_len():
-    tree = ttk.Treeview(columns=("frequency",
+    tree = tkinter.ttk.Treeview(columns=("frequency",
                                  "mode",
                                  "description",
                                  "lockout"),
@@ -80,7 +80,7 @@ def test_save_gqrx_len():
                                         "mode",
                                         "description"),
                         show="headings")
-    value =  [u'5,955,000', u'AM', u'found on 18.34 jan 08 2015', u'O']
+    value =  ['5,955,000', 'AM', 'found on 18.34 jan 08 2015', 'O']
     tree.insert("",0,values = value)
     bk = Bookmarks(tree, io=IO())
     bk.bookmarks.csv_save = MagicMock()
@@ -89,7 +89,7 @@ def test_save_gqrx_len():
     assert (len(bk.bookmarks.row_list) == 1)
 
 def test_save_gqrx_freq():
-    tree = ttk.Treeview(columns=("frequency",
+    tree = tkinter.ttk.Treeview(columns=("frequency",
                                  "mode",
                                  "description",
                                  "lockout"),
@@ -97,7 +97,7 @@ def test_save_gqrx_freq():
                                         "mode",
                                         "description"),
                         show="headings")
-    value =  [u'5,955,000', u'AM', u'found on 18.34 jan 08 2015', u'O']
+    value =  ['5,955,000', 'AM', 'found on 18.34 jan 08 2015', 'O']
     tree.insert("",0,values = value)
     bk = Bookmarks(tree, io=IO())
     bk.bookmarks.csv_save = MagicMock()
@@ -106,7 +106,7 @@ def test_save_gqrx_freq():
     int(bk.bookmarks.row_list[0][0])
 
 def test_save_gqrx_mode():
-    tree = ttk.Treeview(columns=("frequency",
+    tree = tkinter.ttk.Treeview(columns=("frequency",
                                  "mode",
                                  "description",
                                  "lockout"),
@@ -114,7 +114,7 @@ def test_save_gqrx_mode():
                                         "mode",
                                         "description"),
                         show="headings")
-    value =  [u'5,955,000', u'AM', u'found on 18.34 jan 08 2015', u'O']
+    value =  ['5,955,000', 'AM', 'found on 18.34 jan 08 2015', 'O']
     tree.insert("",0,values = value)
     bk = Bookmarks(tree, io=IO())
     bk.bookmarks.csv_save = MagicMock()
@@ -123,7 +123,7 @@ def test_save_gqrx_mode():
     assert (bk.bookmarks.row_list[0][2] in CBB_MODES)
 
 def test_save_gqrx_tag():
-    tree = ttk.Treeview(columns=("frequency",
+    tree = tkinter.ttk.Treeview(columns=("frequency",
                                  "mode",
                                  "description",
                                  "lockout"),
@@ -131,7 +131,7 @@ def test_save_gqrx_tag():
                                         "mode",
                                         "description"),
                         show="headings")
-    value =  [u'5,955,000', u'AM', u'found on 18.34 jan 08 2015', u'O']
+    value =  ['5,955,000', 'AM', 'found on 18.34 jan 08 2015', 'O']
     tree.insert("",0,values = value)
     bk = Bookmarks(tree, io=IO())
     bk.bookmarks.csv_save = MagicMock()
@@ -140,7 +140,7 @@ def test_save_gqrx_tag():
     assert (bk.bookmarks.row_list[0][4] == "Untagged")
 
 def test_save_gqrx_comment():
-    tree = ttk.Treeview(columns=("frequency",
+    tree = tkinter.ttk.Treeview(columns=("frequency",
                                  "mode",
                                  "description",
                                  "lockout"),
@@ -148,25 +148,25 @@ def test_save_gqrx_comment():
                                         "mode",
                                         "description"),
                         show="headings")
-    value =  [u'5,955,000', u'AM', u'found on 18.34 jan 08 2015', u'O']
+    value =  ['5,955,000', 'AM', 'found on 18.34 jan 08 2015', 'O']
     tree.insert("",0,values = value)
     bk = Bookmarks(tree, io=IO())
     bk.bookmarks.csv_save = MagicMock()
     bk.bookmarks.return_value = None
     bk._save_gqrx("test")
-    assert(isinstance(bk.bookmarks.row_list[0][1], basestring))
+    assert(isinstance(bk.bookmarks.row_list[0][1], str))
 
 def test_insert_bookmark_values_present(bk):
-    assert ("values" in (bk.tree.item("I001")).keys())
+    assert ("values" in list((bk.tree.item("I001")).keys()))
 
 def test_insert_bookmark_text_present(bk):
-    assert ("text" in (bk.tree.item("I001")).keys())
+    assert ("text" in list((bk.tree.item("I001")).keys()))
 
 def test_insert_bookmark_image_present(bk):
-    assert ("image" in (bk.tree.item("I001")).keys())
+    assert ("image" in list((bk.tree.item("I001")).keys()))
 
 def test_insert_bookmark_values(bk):
-    assert (bk.tree.item("I001")["values"] == [u'5,955,000', u'AM', u'found on 18.34 jan 08 2015', u'O'])
+    assert (bk.tree.item("I001")["values"] == ['5,955,000', 'AM', 'found on 18.34 jan 08 2015', 'O'])
 
 def test_insert_bookmark_image(bk):
     assert (bk.tree.item("I001")["image"] == "")
@@ -186,7 +186,7 @@ def test_load_nothing(bk):
     assert (bk.load("","") == None)
 
 def test_import_rig_remote():
-    tree = ttk.Treeview(columns=("frequency",
+    tree = tkinter.ttk.Treeview(columns=("frequency",
                                  "mode",
                                  "description",
                                  "lockout"),
@@ -194,7 +194,7 @@ def test_import_rig_remote():
                                         "mode",
                                         "description"),
                         show="headings")
-    value =  [u'5,955,000', u'AM', u'found on 18.34 jan 08 2015', u'O']
+    value =  ['5,955,000', 'AM', 'found on 18.34 jan 08 2015', 'O']
     tree.insert("",0,values = value)
     bk = Bookmarks(tree, io=IO())
     bk.load = MagicMock()
@@ -203,7 +203,7 @@ def test_import_rig_remote():
     bk.load.assert_called_once_with("test", ",", silent=False)
 
 def test_import_gqrx():
-    tree = ttk.Treeview(columns=("frequency",
+    tree = tkinter.ttk.Treeview(columns=("frequency",
                                  "mode",
                                  "description",
                                  "lockout"),
@@ -211,7 +211,7 @@ def test_import_gqrx():
                                         "mode",
                                         "description"),
                         show="headings")
-    value =  [u'5,955,000', u'AM', u'found on 18.34 jan 08 2015', u'O']
+    value =  ['5,955,000', 'AM', 'found on 18.34 jan 08 2015', 'O']
     tree.insert("",0,values = value)
     bk = Bookmarks(tree, io=IO())
     bk.bookmarks.csv_load = MagicMock()

@@ -132,16 +132,16 @@ class ScanningTask(object):
         self.rig = rig_controller
 
         try:
-            self.params["range_min"] = khertz_to_hertz(int(filter(str.isdigit,
-                                                       self.params["txt_range_min"].get())))
-            self.params["range_max"] = khertz_to_hertz(int(filter(str.isdigit,
-                                                       self.params["txt_range_max"].get())))
-            self.params["interval"] = int(filter(str.isdigit,
-                                                 self.params["txt_interval"].get()))
-            self.params["delay"] = int(filter(str.isdigit,
-                                              self.params["txt_delay"].get()))
-            self.params["passes"] = int(filter(str.isdigit,
-                                               self.params["txt_passes"].get()))
+            self.params["range_min"] = khertz_to_hertz(int(list(filter(str.isdigit,
+                                                       self.params["txt_range_min"].get()))))
+            self.params["range_max"] = khertz_to_hertz(int(list(filter(str.isdigit,
+                                                       self.params["txt_range_max"].get()))))
+            self.params["interval"] = int(list(filter(str.isdigit,
+                                                 self.params["txt_interval"].get())))
+            self.params["delay"] = int(list(filter(str.isdigit,
+                                              self.params["txt_delay"].get())))
+            self.params["passes"] = int(list(filter(str.isdigit,
+                                               self.params["txt_passes"].get())))
             self.params["sgn_level"] = int(re.sub("[^-0-9]",
                                                   "",
                                                   self.params["txt_sgn_level"].get()))

@@ -7,7 +7,7 @@ from rig_remote.ui import RigRemote
 from rig_remote.app_config import AppConfig
 from rig_remote.exceptions import UnsupportedScanningConfigError
 from rig_remote.utility import is_valid_hostname, is_valid_port
-import Tkinter as tk
+import tkinter as tk
 from socket import gaierror
 
 @pytest.fixture

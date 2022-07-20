@@ -104,10 +104,10 @@ from rig_remote.utility import (
                                 RCCheckbutton,
                                 center_window,
                                 )
-import Tkinter as tk
-import ttk
-from Tkinter import LabelFrame
-import tkMessageBox
+import tkinter as tk
+import tkinter.ttk
+from tkinter import LabelFrame
+import tkinter.messagebox
 import threading
 import itertools
 import webbrowser
@@ -117,7 +117,7 @@ from rig_remote.stmessenger import STMessenger
 logger = logging.getLogger(__name__)
 
 # classes definition
-class RigRemote(ttk.Frame):
+class RigRemote(tkinter.ttk.Frame):
     """Remote application that interacts with the rig using rigctl protocol.
     Gqrx partially implements rigctl since version 2.3.
     :raises: none
@@ -125,7 +125,7 @@ class RigRemote(ttk.Frame):
     """
 
     def __init__(self, root, ac):
-        ttk.Frame.__init__(self, root)
+        tkinter.ttk.Frame.__init__(self, root)
         self.root = root
         self.params = {}
         self.params_last_content = {}
@@ -205,7 +205,7 @@ class RigRemote(ttk.Frame):
 
         # bookmarks list
 
-        self.tree = ttk.Treeview(self,
+        self.tree = tkinter.ttk.Treeview(self,
                                  columns=("frequency",
                                           "mode",
                                           "description",
@@ -238,14 +238,14 @@ class RigRemote(ttk.Frame):
         self.tree.column('description',
                          stretch=True,
                          )
-        ysb = ttk.Scrollbar(self,
+        ysb = tkinter.ttk.Scrollbar(self,
                             orient=tk.VERTICAL,
                             command=self.tree.yview)
         ysb.grid(row=0,
                  column=2,
                  rowspan=6,
                  sticky=tk.NS)
-        xsb = ttk.Scrollbar(self,
+        xsb = tkinter.ttk.Scrollbar(self,
                             orient=tk.HORIZONTAL,
                             command=self.tree.xview)
         xsb.grid(row=6,
@@ -262,7 +262,7 @@ class RigRemote(ttk.Frame):
                        )
 
         # vertical separator between bookmarks and comands
-        ttk.Frame(self).grid(row=0,
+        tkinter.ttk.Frame(self).grid(row=0,
                              column=2,
                              rowspan=5,
                              padx=5)
@@ -273,11 +273,11 @@ class RigRemote(ttk.Frame):
                                   column=3,
                                   sticky=tk.NSEW)
 
-        ttk.Label(self.rig_config_menu,
+        tkinter.ttk.Label(self.rig_config_menu,
                   text="Hostname:").grid(row=1,
                                          column=2,
                                          sticky=tk.W)
-        self.params["txt_hostname1"] = ttk.Entry(self.rig_config_menu,
+        self.params["txt_hostname1"] = tkinter.ttk.Entry(self.rig_config_menu,
                                                 name="txt_hostname1")
         self.params["txt_hostname1"].grid(row=1,
                                          column=3,
@@ -291,11 +291,11 @@ class RigRemote(ttk.Frame):
         self.params["txt_hostname1"].bind("<Return>", self.process_entry)
         self.params["txt_hostname1"].bind("<FocusOut>", self.process_entry)
 
-        ttk.Label(self.rig_config_menu,
+        tkinter.ttk.Label(self.rig_config_menu,
                   text="Port:").grid(row=2,
                                      column=2,
                                      sticky=tk.W)
-        self.params["txt_port1"] = ttk.Entry(self.rig_config_menu,
+        self.params["txt_port1"] = tkinter.ttk.Entry(self.rig_config_menu,
                                             name="txt_port1")
         self.params["txt_port1"].grid(row=2,
                                      column=3,
@@ -316,11 +316,11 @@ class RigRemote(ttk.Frame):
                                   column=4,
                                   sticky=tk.NSEW)
 
-        ttk.Label(self.rig_config_menu,
+        tkinter.ttk.Label(self.rig_config_menu,
                   text="Hostname:").grid(row=1,
                                          column=3,
                                          sticky=tk.W)
-        self.params["txt_hostname2"] = ttk.Entry(self.rig_config_menu,
+        self.params["txt_hostname2"] = tkinter.ttk.Entry(self.rig_config_menu,
                                                 name="txt_hostname2")
         self.params["txt_hostname2"].grid(row=1,
                                          column=4,
@@ -334,11 +334,11 @@ class RigRemote(ttk.Frame):
         self.params["txt_hostname2"].bind("<Return>", self.process_entry)
         self.params["txt_hostname2"].bind("<FocusOut>", self.process_entry)
 
-        ttk.Label(self.rig_config_menu,
+        tkinter.ttk.Label(self.rig_config_menu,
                   text="Port:").grid(row=2,
                                      column=3,
                                      sticky=tk.W)
-        self.params["txt_port2"] = ttk.Entry(self.rig_config_menu,
+        self.params["txt_port2"] = tkinter.ttk.Entry(self.rig_config_menu,
                                             name="txt_port2")
         self.params["txt_port2"].grid(row=2,
                                      column=4,
@@ -354,7 +354,7 @@ class RigRemote(ttk.Frame):
 
         # second rig bookmarking
         # horizontal separator
-        ttk.Frame(self.rig_config_menu).grid(row=3,
+        tkinter.ttk.Frame(self.rig_config_menu).grid(row=3,
                                              column=1,
                                              columnspan=3,
                                              pady=5)
@@ -365,11 +365,11 @@ class RigRemote(ttk.Frame):
                                    column=4,
                                    stick=tk.NSEW)
 
-        ttk.Label(self.rig_control_menu,
+        tkinter.ttk.Label(self.rig_control_menu,
                   text="Frequency:").grid(row=5,
                                           column=1,
                                           sticky=tk.W)
-        self.params["txt_frequency2"] = ttk.Entry(self.rig_control_menu,
+        self.params["txt_frequency2"] = tkinter.ttk.Entry(self.rig_control_menu,
                                                  name="txt_frequency2")
         self.params["txt_frequency2"].grid(row=5,
                                           column=2,
@@ -380,16 +380,16 @@ class RigRemote(ttk.Frame):
         t_txt_frequency = ToolTip(self.params["txt_frequency2"],
                                   follow_mouse=1,
                                   text="Frequency to tune on this rig.")
-        ttk.Label(self.rig_control_menu,
+        tkinter.ttk.Label(self.rig_control_menu,
                   text="Hz").grid(row=5,
                                    column=4,
                                    sticky=tk.EW)
 
-        ttk.Label(self.rig_control_menu,
+        tkinter.ttk.Label(self.rig_control_menu,
                   text="Mode:").grid(row=6,
                                      column=1,
                                      sticky=tk.W)
-        self.params["cbb_mode2"] = ttk.Combobox(self.rig_control_menu,
+        self.params["cbb_mode2"] = tkinter.ttk.Combobox(self.rig_control_menu,
                                                 name="cbb_mode2",width=15)
         self.params["cbb_mode2"].grid(row=6,
                                       column=2,
@@ -402,11 +402,11 @@ class RigRemote(ttk.Frame):
                               text="Mode to use for tuning the frequency.")
         self.params["cbb_mode2"]['values'] = CBB_MODES
 
-        ttk.Label(self.rig_control_menu,
+        tkinter.ttk.Label(self.rig_control_menu,
                   text="Description:").grid(row=7,
                                             column=1,
                                             sticky=tk.EW)
-        self.params["txt_description2"] = ttk.Entry(self.rig_control_menu,
+        self.params["txt_description2"] = tkinter.ttk.Entry(self.rig_control_menu,
                                                     name="txt_description2")
         self.params["txt_description2"].grid(row=7,
                                              column=2,
@@ -418,7 +418,7 @@ class RigRemote(ttk.Frame):
                                      follow_mouse=1,
                                      text="Description of the bookmark.")
 
-        self.btn_add2 = ttk.Button(self.rig_control_menu,
+        self.btn_add2 = tkinter.ttk.Button(self.rig_control_menu,
                                    text="Add",
                                    width=7,
                                    command=self.cb_second_add)
@@ -430,7 +430,7 @@ class RigRemote(ttk.Frame):
                            padx=2,
                            pady=2)
 
-        self.btn_delete2 = ttk.Button(self.rig_control_menu,
+        self.btn_delete2 = tkinter.ttk.Button(self.rig_control_menu,
                                       text="Remove",
                                       width=7,
                                       command=self.cb_delete2)
@@ -442,7 +442,7 @@ class RigRemote(ttk.Frame):
                               padx=2,
                               pady=2)
 
-        self.btn_load2 = ttk.Button(self.rig_control_menu,
+        self.btn_load2 = tkinter.ttk.Button(self.rig_control_menu,
                                     text="Get",
                                     width=7,
                                     command=self.cb_second_get_frequency)
@@ -454,7 +454,7 @@ class RigRemote(ttk.Frame):
                             padx=2,
                             pady=2)
 
-        self.btn_tune2 = ttk.Button(self.rig_control_menu,
+        self.btn_tune2 = tkinter.ttk.Button(self.rig_control_menu,
                                     text="Set",
                                     width=7,
                                     command=self.cb_second_set_frequency)
@@ -468,7 +468,7 @@ class RigRemote(ttk.Frame):
                             padx=2,
                             pady=2)
 
-        self.btn_recall2 = ttk.Button(self.rig_control_menu,
+        self.btn_recall2 = tkinter.ttk.Button(self.rig_control_menu,
                                       text="Recall",
                                       width=7,
                                    command=self.cb_second_fill_form)
@@ -487,7 +487,7 @@ class RigRemote(ttk.Frame):
                               pady=2)
 
         # horizontal separator
-        ttk.Frame(self.rig_config_menu).grid(row=3,
+        tkinter.ttk.Frame(self.rig_config_menu).grid(row=3,
                                              column=0,
                                              columnspan=3,
                                              pady=5)
@@ -498,11 +498,11 @@ class RigRemote(ttk.Frame):
                                    column=3,
                                    stick=tk.NSEW)
 
-        ttk.Label(self.rig_control_menu,
+        tkinter.ttk.Label(self.rig_control_menu,
                   text="Frequency:").grid(row=5,
                                           column=0,
                                           sticky=tk.W)
-        self.params["txt_frequency1"] = ttk.Entry(self.rig_control_menu,
+        self.params["txt_frequency1"] = tkinter.ttk.Entry(self.rig_control_menu,
                                                  name="txt_frequency1")
         self.params["txt_frequency1"].grid(row=5,
                                           column=1,
@@ -513,16 +513,16 @@ class RigRemote(ttk.Frame):
         t_txt_frequency = ToolTip(self.params["txt_frequency1"],
                                   follow_mouse=1,
                                   text="Frequency to tune on this rig.")
-        ttk.Label(self.rig_control_menu,
+        tkinter.ttk.Label(self.rig_control_menu,
                   text="Hz").grid(row=5,
                                    column=3,
                                    sticky=tk.EW)
 
-        ttk.Label(self.rig_control_menu,
+        tkinter.ttk.Label(self.rig_control_menu,
                   text="Mode:").grid(row=6,
                                      column=0,
                                      sticky=tk.W)
-        self.params["cbb_mode1"] = ttk.Combobox(self.rig_control_menu,
+        self.params["cbb_mode1"] = tkinter.ttk.Combobox(self.rig_control_menu,
                                                name="cbb_mode1",width=15)
         self.params["cbb_mode1"].grid(row=6,
                                      column=1,
@@ -535,11 +535,11 @@ class RigRemote(ttk.Frame):
                               text="Mode to use for tuning the frequency.")
         self.params["cbb_mode1"]['values'] = CBB_MODES
 
-        ttk.Label(self.rig_control_menu,
+        tkinter.ttk.Label(self.rig_control_menu,
                   text="Description:").grid(row=7,
                                             column=0,
                                             sticky=tk.EW)
-        self.params["txt_description1"] = ttk.Entry(self.rig_control_menu,
+        self.params["txt_description1"] = tkinter.ttk.Entry(self.rig_control_menu,
                                                    name="txt_description1")
         self.params["txt_description1"].grid(row=7,
                                             column=1,
@@ -551,7 +551,7 @@ class RigRemote(ttk.Frame):
                                     follow_mouse=1,
                                     text="Description of the bookmark.")
 
-        self.btn_add1 = ttk.Button(self.rig_control_menu,
+        self.btn_add1 = tkinter.ttk.Button(self.rig_control_menu,
                                   text="Add",
                                   width=7,
                                   command=self.cb_first_add)
@@ -563,7 +563,7 @@ class RigRemote(ttk.Frame):
                           padx=2,
                           pady=2)
 
-        self.btn_delete1 = ttk.Button(self.rig_control_menu,
+        self.btn_delete1 = tkinter.ttk.Button(self.rig_control_menu,
                                      text="Remove",
                                      width=7,
                                      command=self.cb_delete1)
@@ -575,7 +575,7 @@ class RigRemote(ttk.Frame):
                              padx=2,
                              pady=2)
 
-        self.btn_load1 = ttk.Button(self.rig_control_menu,
+        self.btn_load1 = tkinter.ttk.Button(self.rig_control_menu,
                                    text="Get",
                                    width=7,
                                    command=self.cb_first_get_frequency)
@@ -588,7 +588,7 @@ class RigRemote(ttk.Frame):
                            padx=2,
                            pady=2)
 
-        self.btn_tune1 = ttk.Button(self.rig_control_menu,
+        self.btn_tune1 = tkinter.ttk.Button(self.rig_control_menu,
                                    text="Set",
                                    width=7,
                                    command=self.cb_first_set_frequency)
@@ -602,7 +602,7 @@ class RigRemote(ttk.Frame):
                             padx=2,
                             pady=2)
 
-        self.btn_recall1 = ttk.Button(self.rig_control_menu,
+        self.btn_recall1 = tkinter.ttk.Button(self.rig_control_menu,
                                       text="Recall",
                                       width=7,
                                       command=self.cb_first_fill_form)
@@ -617,7 +617,7 @@ class RigRemote(ttk.Frame):
                               pady=2)
 
         # horizontal separator
-        ttk.Frame(self.rig_control_menu).grid(row=9,
+        tkinter.ttk.Frame(self.rig_control_menu).grid(row=9,
                                               column=0,
                                               columnspan=3,
                                               pady=5)
@@ -628,11 +628,11 @@ class RigRemote(ttk.Frame):
                                     column=3,
                                     stick=tk.NSEW)
 
-        ttk.Label(self.scanning_conf_menu,
+        tkinter.ttk.Label(self.scanning_conf_menu,
                   text="Signal level:").grid(row=10,
                                              column=0,
                                              sticky=tk.W)
-        self.params["txt_sgn_level"] = ttk.Entry(self.scanning_conf_menu,
+        self.params["txt_sgn_level"] = tkinter.ttk.Entry(self.scanning_conf_menu,
                                                  name="txt_sgn_level",
                                                  width=10)
         self.params["txt_sgn_level"].grid(row=10,
@@ -647,17 +647,17 @@ class RigRemote(ttk.Frame):
         self.params["txt_sgn_level"].bind("<Return>", self.process_entry)
         self.params["txt_sgn_level"].bind("<FocusOut>", self.process_entry)
 
-        ttk.Label(self.scanning_conf_menu,
+        tkinter.ttk.Label(self.scanning_conf_menu,
                   text=" dBFS").grid(row=10,
                                      column=2,
                                      padx=0,
                                      sticky=tk.W)
 
-        ttk.Label(self.scanning_conf_menu,
+        tkinter.ttk.Label(self.scanning_conf_menu,
                   text="Delay:").grid(row=13,
                                       column=0,
                                       sticky=tk.W)
-        self.params["txt_delay"] = ttk.Entry(self.scanning_conf_menu,
+        self.params["txt_delay"] = tkinter.ttk.Entry(self.scanning_conf_menu,
                                              name="txt_delay", width=10)
         t_txt_delay = ToolTip(self.params["txt_delay"],
                               follow_mouse=1,
@@ -668,7 +668,7 @@ class RigRemote(ttk.Frame):
                                       padx=2,
                                       pady=2,
                                       sticky=tk.W)
-        ttk.Label(self.scanning_conf_menu,
+        tkinter.ttk.Label(self.scanning_conf_menu,
                   text=" seconds").grid(row=13,
                                        padx=0,
                                        column=2,
@@ -676,11 +676,11 @@ class RigRemote(ttk.Frame):
         self.params["txt_delay"].bind("<Return>", self.process_entry)
         self.params["txt_delay"].bind("<FocusOut>", self.process_entry)
 
-        ttk.Label(self.scanning_conf_menu,
+        tkinter.ttk.Label(self.scanning_conf_menu,
                   text="Passes:").grid(row=14,
                                        column=0,
                                        sticky=tk.W)
-        self.params["txt_passes"] = ttk.Entry(self.scanning_conf_menu,
+        self.params["txt_passes"] = tkinter.ttk.Entry(self.scanning_conf_menu,
                                               name="txt_passes",
                                               width=10)
         self.params["txt_passes"].grid(row=14,
@@ -692,7 +692,7 @@ class RigRemote(ttk.Frame):
         t_txt_passes = ToolTip(self.params["txt_passes"],
                               follow_mouse=1,
                               text="Number of scans.")
-        ttk.Label(self.scanning_conf_menu,
+        tkinter.ttk.Label(self.scanning_conf_menu,
                   text="  0=Infinite").grid(row=14,
                                             padx=0,
                                             column=2,
@@ -760,7 +760,7 @@ class RigRemote(ttk.Frame):
                                      #rowspan=3,
                                      stick=tk.NSEW)
 
-        self.freq_scan_toggle = ttk.Button(self.freq_scanning_menu,
+        self.freq_scan_toggle = tkinter.ttk.Button(self.freq_scanning_menu,
                                           text="Start",
                                           command=self.frequency_toggle,
                                           )
@@ -772,16 +772,16 @@ class RigRemote(ttk.Frame):
                                    padx=2,
                                    sticky=tk.W)
 
-        ttk.Label(self.freq_scanning_menu,
+        tkinter.ttk.Label(self.freq_scanning_menu,
                   text="Min/Max:").grid(row=12,
                                         column=0,
                                         sticky=tk.W)
-        ttk.Label(self.freq_scanning_menu,
+        tkinter.ttk.Label(self.freq_scanning_menu,
                   text="khz").grid(row=12,
                                    padx=0,
                                    column=3,
                                    sticky=tk.W)
-        self.params["txt_range_min"] = ttk.Entry(self.freq_scanning_menu,
+        self.params["txt_range_min"] = tkinter.ttk.Entry(self.freq_scanning_menu,
                                                  name="txt_range_min",
                                                  width=8)
         self.params["txt_range_min"].grid(row=12,
@@ -797,7 +797,7 @@ class RigRemote(ttk.Frame):
         self.params["txt_range_min"].bind("<Return>", self.process_entry)
         self.params["txt_range_min"].bind("<FocusOut>", self.process_entry)
 
-        self.params["txt_range_max"] = ttk.Entry(self.freq_scanning_menu,
+        self.params["txt_range_max"] = tkinter.ttk.Entry(self.freq_scanning_menu,
                                                  name="txt_range_max",
                                                  width=8)
         self.params["txt_range_max"].grid(row=12,
@@ -813,11 +813,11 @@ class RigRemote(ttk.Frame):
         self.params["txt_range_max"].bind("<Return>", self.process_entry)
         self.params["txt_range_max"].bind("<FocusOut>", self.process_entry)
 
-        ttk.Label(self.freq_scanning_menu,
+        tkinter.ttk.Label(self.freq_scanning_menu,
                   text="Interval:").grid(row=13,
                                          column=0,
                                          sticky=tk.W)
-        self.params["txt_interval"] = ttk.Entry(self.freq_scanning_menu,
+        self.params["txt_interval"] = tkinter.ttk.Entry(self.freq_scanning_menu,
                                                 name="txt_interval",
                                                 width=6)
         self.params["txt_interval"].grid(row=13,
@@ -829,7 +829,7 @@ class RigRemote(ttk.Frame):
         t_txt_interval = ToolTip(self.params["txt_interval"],
                                  follow_mouse=1,
                                  text="Tune once every interval khz.")
-        ttk.Label(self.freq_scanning_menu,
+        tkinter.ttk.Label(self.freq_scanning_menu,
                   text="Khz").grid(row=13,
                                    padx=0,
                                    column=2,
@@ -855,11 +855,11 @@ class RigRemote(ttk.Frame):
         self.params["ckb_auto_bookmark"].val = self.cb_auto_bookmark
         self.cb_auto_bookmark.trace("w", self.process_auto_bookmark)
 
-        ttk.Label(self.freq_scanning_menu,
+        tkinter.ttk.Label(self.freq_scanning_menu,
                   text="Scan mode:").grid(row=16,
                                           column=0,
                                           sticky=tk.W)
-        self.params["cbb_scan_mode"] = ttk.Combobox(self.freq_scanning_menu,
+        self.params["cbb_scan_mode"] = tkinter.ttk.Combobox(self.freq_scanning_menu,
                                                     name="cbb_scan_mode",
                                                     width=4)
         self.params["cbb_scan_mode"].grid(row=16,
@@ -892,7 +892,7 @@ class RigRemote(ttk.Frame):
 #        self.params["ckb_aggr_scan"].val = self.cb_aggr_scan
 #        self.cb_aggr_scan.trace("w", self.process_record)
 
-        ttk.Frame(self.freq_scanning_menu).grid(row=17,
+        tkinter.ttk.Frame(self.freq_scanning_menu).grid(row=17,
                                                 column=0,
                                                 columnspan=3,
                                                 pady=5)
@@ -903,21 +903,21 @@ class RigRemote(ttk.Frame):
                                      stick=tk.NSEW)
 
         #horrible horizontal placeholder
-        ttk.Label(self.book_scanning_menu,
+        tkinter.ttk.Label(self.book_scanning_menu,
                   width=8).grid(row=17,
                                 column=1,
                                 sticky=tk.NSEW)
-        ttk.Label(self.book_scanning_menu,
+        tkinter.ttk.Label(self.book_scanning_menu,
                   width=8).grid(row=17,
                                 column=2,
                                 sticky=tk.NSEW)
 
-        ttk.Label(self.book_scanning_menu,
+        tkinter.ttk.Label(self.book_scanning_menu,
                   width=8).grid(row=17,
                                 column=3,
                                 sticky=tk.NSEW)
 
-        self.book_scan_toggle = ttk.Button(self.book_scanning_menu,
+        self.book_scan_toggle = tkinter.ttk.Button(self.book_scanning_menu,
                                            text="Start",
                                            command=self.bookmark_toggle,
                                            )
@@ -930,7 +930,7 @@ class RigRemote(ttk.Frame):
                                    padx=2,
                                    sticky=tk.W)
 
-        self.book_lockout = ttk.Button(self.book_scanning_menu,
+        self.book_lockout = tkinter.ttk.Button(self.book_scanning_menu,
                                        text="Lock",
                                        command=self.bookmark_lockout,
                                       )
@@ -944,7 +944,7 @@ class RigRemote(ttk.Frame):
                                sticky=tk.W)
 
         self.sync_menu = LabelFrame(self, text="Rig Frequency Sync")
-        ttk.Frame(self.sync_menu).grid(row=19,
+        tkinter.ttk.Frame(self.sync_menu).grid(row=19,
                                        column=0,
                                        columnspan=3,
                                        pady=5)
@@ -955,17 +955,17 @@ class RigRemote(ttk.Frame):
 
         #horrible horizontal placeholder
 
-        ttk.Label(self.sync_menu,
+        tkinter.ttk.Label(self.sync_menu,
                   width=8).grid(row=20,
                                 column=2,
                                 sticky=tk.NSEW)
 
-        ttk.Label(self.sync_menu,
+        tkinter.ttk.Label(self.sync_menu,
                   width=8).grid(row=21,
                                 column=3,
                                 sticky=tk.NSEW)
 
-        self.sync = ttk.Button(self.sync_menu,
+        self.sync = tkinter.ttk.Button(self.sync_menu,
                                text="Start",
                                command=self.sync_toggle,
                                )
@@ -980,7 +980,7 @@ class RigRemote(ttk.Frame):
                        padx=2,
                        sticky=tk.W)
         # horizontal separator
-        ttk.Frame(self.book_scanning_menu).grid(row=22,
+        tkinter.ttk.Frame(self.book_scanning_menu).grid(row=22,
                                                 column=0,
                                                 columnspan=3,
                                                 rowspan=1,
@@ -1027,7 +1027,7 @@ class RigRemote(ttk.Frame):
         self.ckb_save_exit.val = self.cb_save_exit
 
         # horizontal separator
-        ttk.Frame(self.control_menu).grid(row=24,
+        tkinter.ttk.Frame(self.control_menu).grid(row=24,
                                           column=0,
                                           columnspan=3,
                                           pady=5)
@@ -1037,7 +1037,7 @@ class RigRemote(ttk.Frame):
         force <FocusOut> callbacks.
         """
 
-        if not isinstance(event.widget, basestring) :
+        if not isinstance(event.widget, str) :
             event.widget.focus_set()
 
     def apply_config(self, ac, silent = False):
@@ -1065,7 +1065,7 @@ class RigRemote(ttk.Frame):
                     self.params["txt_hostname2"].insert(0,
                                                     DEFAULT_CONFIG[hostname])
                 if not silent:
-                    tkMessageBox.showerror("Config File Error"
+                    tkinter.messagebox.showerror("Config File Error"
                                            "One (or more) "
                                            "of the values in the config file was "
                                            "invalid, and the default was used "
@@ -1105,7 +1105,7 @@ class RigRemote(ttk.Frame):
                                                 ac.config["sgn_level"])
         if eflag :
             if not silent:
-                tkMessageBox.showerror("Config File Error", "One (or more) "
+                tkinter.messagebox.showerror("Config File Error", "One (or more) "
                                        "of the values in the config file was "
                                        "invalid, and the default was used "
                                        "instead.", parent = self)
@@ -1176,7 +1176,7 @@ class RigRemote(ttk.Frame):
                                 RigCtl(build_rig_uri(2, self.params)),
                                 RigCtl(build_rig_uri(1, self.params)))
             except UnsupportedSyncConfigError:
-                tkMessageBox.showerror("Sync error",
+                tkinter.messagebox.showerror("Sync error",
                                        "Hostname/port of both rigs "\
                                        "must be specified")
                 self.sync_toggle()
@@ -1219,7 +1219,7 @@ class RigRemote(ttk.Frame):
         """
 
         if self.params["cbb_scan_mode"].get() == "":
-            tkMessageBox.showerror("Error",
+            tkinter.messagebox.showerror("Error",
                                    "You must select a mode for "
                                    "performing a frequency scan.")
             return
@@ -1243,7 +1243,7 @@ class RigRemote(ttk.Frame):
             is_valid_port(event_value)
         except ValueError:
             if not silent:
-                tkMessageBox.showerror("Error",
+                tkinter.messagebox.showerror("Error",
                                        "Invalid input value in "
                                        "port. Must be integer and greater than "
                                        "1024")
@@ -1265,7 +1265,7 @@ class RigRemote(ttk.Frame):
             is_valid_hostname(event_value)
         except Exception:
             if not silent:
-                tkMessageBox.showerror("Error",
+                tkinter.messagebox.showerror("Error",
                                        "Invalid Hostname")
             return
         if number == 1:
@@ -1290,7 +1290,7 @@ class RigRemote(ttk.Frame):
         ekey = str(event_name.split("_",1)[1])
         if (event_value == "") or event_value.isspace() :
             if not silent:
-                answer = tkMessageBox.askyesno("Error",
+                answer = tkinter.messagebox.askyesno("Error",
                                                "{} must have a value "
                                                "entered. Use the "
                                                "default?".format(ekey))
@@ -1328,7 +1328,7 @@ class RigRemote(ttk.Frame):
             event_value_int = int(event.widget.get().replace(',',''))
         except ValueError:
             if not silent:
-                tkMessageBox.showerror("Error",
+                tkinter.messagebox.showerror("Error",
                                    "Invalid input value in %s" % event_name)
             event.widget.focus_set()
             return
@@ -1471,7 +1471,7 @@ class RigRemote(ttk.Frame):
 
             if len(self.tree.get_children()) == 0 and mode == "bookmarks":
                 if not silent:
-                    tkMessageBox.showerror("Error",
+                    tkinter.messagebox.showerror("Error",
                                            "No bookmarks to scan.")
                 self.bookmark_toggle()
             else:
@@ -1595,7 +1595,7 @@ class RigRemote(ttk.Frame):
             self.params[cbb_mode].insert(0, mode)
         except Exception as err:
             if not silent:
-                tkMessageBox.showerror("Error",
+                tkinter.messagebox.showerror("Error",
                                    "Could not connect to rig.\n%s" % err,
                                    parent=self)
 
@@ -1636,11 +1636,11 @@ class RigRemote(ttk.Frame):
             self.rigctl.set_mode(str((mode)), rig_target)
         except Exception as err:
             if not silent and (frequency != "" or mode != ""):
-                tkMessageBox.showerror("Error",
+                tkinter.messagebox.showerror("Error",
                                        "Could not set frequency.\n%s" % err,
                                        parent=self)
             if not silent and (frequency == "" or mode == ""):
-                tkMessageBox.showerror("Error",
+                tkinter.messagebox.showerror("Error",
                                        "Please provide frequency and mode.",
                                        parent=self)
 
@@ -1692,7 +1692,7 @@ class RigRemote(ttk.Frame):
             int(control_source["frequency"])
         except (ValueError, TypeError):
             if not (silent) :
-                tkMessageBox.showerror("Error",
+                tkinter.messagebox.showerror("Error",
                                        "Invalid value in Frequency field."
                                        "Note: '.' isn't allowed.")
                 self.params[freq].focus_set()
@@ -1740,7 +1740,7 @@ class RigRemote(ttk.Frame):
             elif (frequency == curr_freq and
                   mode == curr_mode) :
                 if not (silent) :
-                    tkMessageBox.showerror("Error", "A bookmark with the "
+                    tkinter.messagebox.showerror("Error", "A bookmark with the "
                                            "same frequency and mode "
                                            "already exists.", parent=self)
                 return
