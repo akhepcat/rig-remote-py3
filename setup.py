@@ -37,12 +37,12 @@ if sys.argv[-1] == 'tag':
 
 setup(
     name = "rig-remote",
-    download_url = ["https://github.com/Marzona/rig-remote/releases"],
+    download_url = ["https://github.com/akhepcat/rig-remote-py3/releases"],
     version = "2.0",
     description = "Remote control a radio transceiver through RigCtl.",
     author="Simone Marzona",
     author_email="marzona@knoway.info",
-    url = "https://github.com/Marzona/rig-remote/",
+    url = "https://github.com/akhepcat/rig-remote-py3/",
     packages = ["rig_remote"],
     long_description = """
         Rig-Remote is a tool for remotely control 
