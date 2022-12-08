@@ -127,19 +127,20 @@ class AppConfig(object):
                         "path as {}".format(self.config_file))
         except OSError:
             logger.info("The config directory already exists.")
+
         config = configparser.RawConfigParser()
         for section in CONFIG_SECTIONS:
-            config.add_section(section)
+            config.add_section(str(section))
 
         for key in list(self.config.keys()):
             if key in RIG_URI_CONFIG:
-                config.set("Rig URI", key, self.config[key])
+                config.set("Rig URI", key, str(self.config[key]))
             if key in MONITOR_CONFIG:
-                config.set("Monitor", key, self.config[key])
+                config.set("Monitor", key, str(self.config[key]))
             if key in MAIN_CONFIG:
-                config.set("Main", key, self.config[key])
+                config.set("Main", key, str(self.config[key]))
             if key in SCANNING_CONFIG:
-                config.set("Scanning", key, self.config[key])
+                config.set("Scanning", key, str(self.config[key]))
 
-        with open(self.config_file, "wb") as cf:
+        with open(str(self.config_file), "w") as cf:
             config.write(cf)

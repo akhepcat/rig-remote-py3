@@ -132,19 +132,12 @@ class ScanningTask(object):
         self.rig = rig_controller
 
         try:
-            self.params["range_min"] = khertz_to_hertz(int(list(filter(str.isdigit,
-                                                       self.params["txt_range_min"].get()))))
-            self.params["range_max"] = khertz_to_hertz(int(list(filter(str.isdigit,
-                                                       self.params["txt_range_max"].get()))))
-            self.params["interval"] = int(list(filter(str.isdigit,
-                                                 self.params["txt_interval"].get())))
-            self.params["delay"] = int(list(filter(str.isdigit,
-                                              self.params["txt_delay"].get())))
-            self.params["passes"] = int(list(filter(str.isdigit,
-                                               self.params["txt_passes"].get())))
-            self.params["sgn_level"] = int(re.sub("[^-0-9]",
-                                                  "",
-                                                  self.params["txt_sgn_level"].get()))
+            self.params["range_min"] = khertz_to_hertz(int(''.join(filter(str.isdigit,self.params["txt_range_min"].get()))))
+            self.params["range_max"] = khertz_to_hertz(int(''.join(filter(str.isdigit,self.params["txt_range_max"].get()))))
+            self.params["interval"] = int(''.join(filter(str.isdigit,self.params["txt_interval"].get())))
+            self.params["delay"] = int(''.join(filter(str.isdigit,self.params["txt_delay"].get())))
+            self.params["passes"] = int(''.join(filter(str.isdigit,self.params["txt_passes"].get())))
+            self.params["sgn_level"] = int(re.sub("[^-0-9]","",self.params["txt_sgn_level"].get()))
             self.params["log"] = self.params["ckb_log"].is_checked()
             self.params["wait"] = self.params["ckb_wait"].is_checked()
             self.params["record"] = self.params["ckb_record"].is_checked()

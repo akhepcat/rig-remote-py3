@@ -1057,7 +1057,7 @@ class RigRemote(tkinter.ttk.Frame):
         for hostname in hostnames:
             try:
                 is_valid_hostname(ac.config[hostname])
-            except ValueError:
+            except (ValueError, KeyError):
                 if hostname == "hostname1":
                     self.params["txt_hostname1"].insert(0,
                                                     DEFAULT_CONFIG[hostname])
@@ -1723,7 +1723,7 @@ class RigRemote(tkinter.ttk.Frame):
         :returns: none
         """
 
-        frequency = control_source["frequency"]
+        frequency = int(control_source["frequency"])
         mode = control_source["mode"]
         description = control_source["description"]
         lockout = "O"
@@ -1732,7 +1732,7 @@ class RigRemote(tkinter.ttk.Frame):
         for item in self.tree.get_children():
             freq = str(self.tree.item(item).get('values')[BM.freq])
             uni_curr_freq = frequency_pp_parse(freq)
-            curr_freq = uni_curr_freq.encode("UTF-8")
+            curr_freq = int(uni_curr_freq.encode("UTF-8"))
             curr_mode = self.tree.item(item).get('values')[BM.mode]
             if frequency < curr_freq:
                 idx = self.tree.index(item)

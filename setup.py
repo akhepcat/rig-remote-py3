@@ -10,7 +10,10 @@ if sys.argv[-1] == 'test':
     test_requirements = [
         'pytest',
         'flake8',
-        'coverage'
+        'coverage',
+        'pytest-cov',
+        'mock'
+
     ]
     try:
         modules = list(map(__import__, test_requirements))

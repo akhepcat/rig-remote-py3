@@ -142,12 +142,18 @@ if __name__ == "__main__":
     #   use path from config file
     #   use default path
     ac.read_conf()
+    ac.write_conf()
 
     if args.alternate_bookmark_file != None:
         bookmarks = args.alternate_bookmark_file
         ac.config['bookmark_filename'] = process_path(bookmarks)
-    elif ac.config["bookmark_filename"] == None:
-        ac.config["bookmark_filename"] = os.path.join(dir_prefix, DEFAULT_BOOKMARK_FILENAME)
+    else:
+        try:
+            if str(ac.config["bookmark_filename"]) == None:
+                ac.config["bookmark_filename"] = os.path.join(dir_prefix, DEFAULT_BOOKMARK_FILENAME)
+        except (ValueError,KeyError):
+                ac.config["bookmark_filename"] = os.path.join(dir_prefix, DEFAULT_BOOKMARK_FILENAME)
+
     # set activity log filename
     if args.alternate_log_file != None:
         log = args.alternate_log_file

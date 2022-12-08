@@ -26,7 +26,7 @@ def test_app_config8():
 def test_app_config9():
     ac = AppConfig("./test-config.file")
     ac.read_conf()
-    assert(ac.config["bookmark_filename"] == "/home/marzona/.rig-remote/rig-remote-bookmarks.csv")
+    assert(ac.config["bookmark_filename"] == "~/.rig-remote/rig-remote-bookmarks.csv")
 
 def test_app_config6():
     ac = AppConfig(DEFAULT_CONFIG)
